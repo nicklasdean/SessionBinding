@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-    <h1>Front page</h1>
+    <form method="POST" action="">
+        <label for="username">username</label>
+        <input id="username" type="text" name="username">
+        <button type="submit">Submitting username</button>
+        <button type="button" onclick="location.href='https://github.com/login/oauth/authorize?client_id=Iv1.0578e89ced9091d9'">Log in with github</button>
+    </form>
+
 </body>
 </html>

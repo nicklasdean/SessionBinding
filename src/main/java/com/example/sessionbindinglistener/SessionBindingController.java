@@ -1,12 +1,16 @@
 package com.example.sessionbindinglistener;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @org.springframework.stereotype.Controller
 public class SessionBindingController {
-    ActiveUserStore activeUserStore = new ActiveUserStore();
+    private final ActiveUserStore activeUserStore = new ActiveUserStore();
+    private final OAuthHandler oauth = new OAuthHandler();
+
 
     @GetMapping("/")
     public String index(Model model){
@@ -14,24 +18,26 @@ public class SessionBindingController {
         return "index";
     }
 
-    @GetMapping("/login")
-    public String login(){
-        return "login";
-    }
-
     @PostMapping("/login")
     public String loginPost(){
         return "redirect:/secret";
     }
 
-    @GetMapping("allUsers")
+    @GetMapping("/allLoggedIn")
     public String all(){
         return "who-is-logged-in";
     }
 
 
     @GetMapping("/secret")
-    public String secret(){
+    public String secret(@RequestParam String code){
+        ResponseEntity<Post> response = oauth.fetchResponse(code);
+        System.out.println(response.toString());
         return "secret";
+    }
+
+    @PostMapping("/github-webhook")
+    public String webhook(){
+        return "index";
     }
 }
